@@ -13,22 +13,25 @@ class Controller:
         return notes
 
     def read_note(self, id: str):
-        self.check_id(id)
         notes = self.editor.get_all_notes()
         return notes[id]
 
     def update_note(self, id: str, note: Note):
-        self.check_id(id)
         self.editor.edit_note(id, note)
 
+
     def delete_note(self, id: str):
-        self.check_id(id)
         self.editor.delete_note(id)
+
     
     def check_id(self, id: str):
         notes = self.editor.get_all_notes()
-        if not id in notes.keys():
-            raise ValueError("Нет заметки с таким идентификационным номером!")
+        try:
+            if not id in notes.keys():
+                raise ValueError()
+            return id
+        except ValueError:
+            return '-1'
 
     def save_json(self):
         self.file.save_json()

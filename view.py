@@ -33,17 +33,29 @@ class View:
                 print("Заметка успешно сохранена")
             elif input_command == 'update':
                 id = input("Введите номер заметки для обновления: ")
-                note = self.new_note()
-                self.controller.update_note(id, note)
-                print('Заметка успешно обновлена')
+                check_id = self.controller.check_id(id)
+                if check_id == '-1':
+                    print("Идентификатор не найден")
+                else:
+                    note = self.new_note()
+                    self.controller.update_note(id, note)
+                    print('Заметка успешно обновлена')
             elif input_command == 'delete':
                 id = input("Введите номер заметки для удаления: ")
-                self.controller.delete_note(id)
-                print('Заметка удалена')
+                check_id = self.controller.check_id(id)
+                if check_id == '-1':
+                    print("Идентификатор не найден")
+                else:
+                    self.controller.delete_note(id)
+                    print('Заметка удалена')
             elif input_command == 'read':
                 id = input("Введите номер заметки, которую хотите прочитать: ")
-                note = self.controller.read_note(id)
-                print(f'{id}: Заголовок: {note[0]}; Текст: {note[1]}; Дата изменения: {note[2]}')
+                check_id = self.controller.check_id(id)
+                if check_id == '-1':
+                    print("Идентификатор не найден")
+                else:
+                    note = self.controller.read_note(id)
+                    print(f'{id}: Заголовок: {note[0]}; Текст: {note[1]}; Дата изменения: {note[2]}')
             elif input_command == 'json':
                 self.controller.save_json()
                 print('Заметки сохранены в формате .json')
